@@ -9,7 +9,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import rootReducer from './rootReducer';
 
-const initialState = { balance: 100000 }
+const initialState = { user: 'Monica', balance: 100000 }
 const store = createStore(rootReducer, initialState);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
