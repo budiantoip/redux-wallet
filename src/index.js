@@ -1,16 +1,19 @@
 import './index.css';
 
+import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { legacy_createStore as createStore } from 'redux';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import rootReducer from './rootReducer';
 
 const initialState = { user: 'Monica', balance: 100000 }
-const store = createStore(rootReducer, initialState);
+const store = configureStore({
+  reducer: rootReducer,
+  preloadedState: initialState
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
