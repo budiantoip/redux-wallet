@@ -1,8 +1,8 @@
-import { configure } from '@testing-library/react';
+import { configureStore } from '@reduxjs/toolkit';
 
 import walletSlice from '../reducers/walletSlice';
 
-const store = configure({
+const store = configureStore({
     reducer: {
       wallet: walletSlice
     }
