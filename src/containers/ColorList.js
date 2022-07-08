@@ -10,7 +10,7 @@ const ColorList = () => {
         : data.data.map(item => <Color key={item.id} item={item} />);
 
     return (
-        <div>
+        <div className='color-list'>
             {
                 error ? (
                     <>Oh no, there was an error</>

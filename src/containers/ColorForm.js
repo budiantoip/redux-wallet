@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Color from '../components/Color';
 import { useAddColorMutation } from '../services/colorAPI';
 
 const ColorForm = () => {
@@ -11,7 +12,7 @@ const ColorForm = () => {
     const [pantone, setPantone] = useState('');
 
     const handleClick = async () => {
-        const newColor = { name, year, color, pantone };
+        const newColor = { name, year, color, pantone_value: pantone };
         addColor(newColor);
         setName('');
         setColor('');
@@ -38,7 +39,7 @@ const ColorForm = () => {
                 value={pantone}
                 placeholder='pantone' />
             <button onClick={handleClick}>Create color</button>
-            {isLoading ? <div>Loading...</div> : <div>{JSON.stringify(data)}</div>}
+            {(!isLoading && data) && <Color item={data} />}
         </div>
     )
 }
