@@ -1,9 +1,34 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from "axios";
 
-const initialState = { user: 'Monica', balance: 100000 }
+const initialState = {
+  user: {
+    id: 0,
+    email: "",
+    first_name: "",
+    last_name: "",
+    avatar: "",
+  },
+  balance: 100000,
+};
+
+// Ini adalah Thunk agar kita bisa melakukan async logic
+// Dia dapat di-dispatch seperti action biasa
+export const userAsync = createAsyncThunk(
+  // ini action type
+  'wallet/fetchUser',
+  async(id) => {
+    const response = await axios.get(`https://reqres.in/api/users/${id}`);
+    // Return menjadi `fulfilled` action payload
+    // Karena axios membungkus dalam data, dan return dari API juga ada data
+    // Makanya datanya jad 2x
+    // return akan menjadi payload
+    return response.data.data;
+  }
+);
 
 const walletSlice = createSlice({
-  name: 'wallet',
+  name: "wallet",
   initialState,
   reducers: {
     deposit: (state, action) => {
@@ -15,6 +40,20 @@ const walletSlice = createSlice({
     withdraw: (state, action) => {
       state.balance -= action.payload;
     },
+  },
+  // `extraReducers` adalah field tambahan untuk menghandle actions
+  // yang dibuat oleh AsyncCreateThunk
+  extraReducers: (builder) => {
+    builder
+      .addCase(userAsync.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(userAsync.pending, () => {
+        console.log("Loading");
+      })
+      .addCase(userAsync.rejected, () => {
+        console.log("Failed to get user");
+      });
   },
 });
 
