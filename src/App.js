@@ -1,11 +1,12 @@
 import './App.css';
-
-import Wallet from './containers/Wallet';
+import ColorForm from './containers/ColorForm';
+import ColorList from './containers/ColorList';
 
 function App() {
   return (
     <div className="App">
-      <Wallet />
+      <ColorForm />
+      <ColorList />
     </div>
   );
 }
